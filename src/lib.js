@@ -47,14 +47,5 @@ export function sydneyNow(now = new Date()) {
   };
 }
 
-export { parseSlot } from './time.js';
-
-// Days until the trip starts, counted in Sydney dates
-export function daysUntil(dateStr, now = new Date()) {
-  const today = new Date(sydneyNow(now).date + 'T00:00:00Z');
-  const target = new Date(dateStr + 'T00:00:00Z');
-  return Math.round((target - today) / 86400000);
-}
-
 export const fmtAud = (n) => `A$${Number(n).toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 export const fmtKrw = (n) => `${Math.round(n).toLocaleString('ko-KR')}원`;

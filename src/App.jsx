@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { sydneyNow, store } from './lib.js';
 import { useTrip } from './useTrip.js';
-import { useSettings } from './useSettings.js';
-import { useWeather, useRate } from './useExternal.js';
+import { useRate } from './useExternal.js';
+import { DAYS } from './plan.js';
 import Home from './components/Home.jsx';
 import Itinerary from './components/Itinerary.jsx';
 import Food from './components/Food.jsx';
@@ -40,8 +40,6 @@ function useHashTab() {
 export default function App() {
   const [route, go] = useHashTab();
   const trip = useTrip();
-  const plan = useSettings(trip);
-  const weather = useWeather(plan.days.map((d) => d.date).filter(Boolean));
   const rate = useRate();
   const [now, setNow] = useState(() => sydneyNow());
   const [theme, setTheme] = useState(() => store.get('theme', 'auto'));
@@ -57,18 +55,12 @@ export default function App() {
     store.set('theme', theme);
   }, [theme]);
 
-  const todayDay = plan.days.find((d) => d.date === now.date)?.n ?? null;
-  const shared = { trip, plan, weather, rate, now, todayDay, go };
-  const first = plan.days[0];
-  const last = plan.days[plan.days.length - 1];
-  const range = plan.dated
-    ? `${Number(first.date.slice(5, 7))}/${Number(first.date.slice(8))}–${Number(last.date.slice(5, 7))}/${Number(last.date.slice(8))}`
-    : '여행';
+  const shared = { trip, rate, go };
 
   return (
     <div className="app">
       <header className="topbar">
-        <button className="brand" onClick={() => go('home')}>🦘 시드니 {range}</button>
+        <button className="brand" onClick={() => go('home')}>🦘 시드니 여행</button>
         <div className="topbar-right">
           <span className="clock" title="시드니 현지 시각">시드니 {now.label}</span>
           <button
@@ -83,7 +75,7 @@ export default function App() {
 
       <main className="content">
         {route.tab === 'home' && <Home {...shared} />}
-        {route.tab === 'days' && <Itinerary {...shared} day={Math.min(route.day ?? todayDay ?? 1, plan.days.length)} />}
+        {route.tab === 'days' && <Itinerary {...shared} day={Math.min(route.day ?? 1, DAYS.length)} />}
         {route.tab === 'food' && <Food {...shared} />}
         {route.tab === 'check' && <Checklist {...shared} />}
         {route.tab === 'money' && <Expenses {...shared} />}

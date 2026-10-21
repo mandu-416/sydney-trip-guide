@@ -1,21 +1,22 @@
 import { useMemo, useState } from 'react';
-import { MEALS, TEMPLATES, mapLink } from '../data.js';
+import { MEALS, mapLink } from '../data.js';
+import { DAYS } from '../plan.js';
 
-export default function Food({ trip, plan, todayDay }) {
-  const [day, setDay] = useState(todayDay ?? 0);
+export default function Food({ trip }) {
+  const [day, setDay] = useState(0);
   const [q, setQ] = useState('');
   const ready = trip.status === 'ready';
 
   const meals = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return MEALS.map((m) => ({ ...m, days: plan.days.filter((d) => d.id === m.tpl) }))
+    return MEALS.map((m) => ({ ...m, days: DAYS.filter((d) => d.id === m.tpl) }))
       .filter((m) => !day || m.days.some((d) => d.n === day))
       .map((m) => ({
         ...m,
         list: m.list.filter((r) => !needle || `${r.name} ${r.loc} ${r.menu}`.toLowerCase().includes(needle)),
       }))
       .filter((m) => m.list.length);
-  }, [day, q, plan.days]);
+  }, [day, q]);
 
   return (
     <>
@@ -32,7 +33,7 @@ export default function Food({ trip, plan, todayDay }) {
           onChange={(e) => setQ(e.target.value)}
         />
         <div className="chips">
-          {[0, ...plan.days.map((d) => d.n)].map((n) => (
+          {[0, ...DAYS.map((d) => d.n)].map((n) => (
             <button key={n} className={`chip ${day === n ? 'on' : ''}`} onClick={() => setDay(n)}>
               {n ? `${n}일차` : '전체'}
             </button>
@@ -44,7 +45,7 @@ export default function Food({ trip, plan, todayDay }) {
 
       {meals.map((m) => (
         <section key={m.title} className="card">
-          <h2>{m.days.length ? m.days.map((d) => `${d.n}일차`).join('·') : `${TEMPLATES[m.tpl].tag}(일정에 없음)`} {m.title}</h2>
+          <h2>{m.days.map((d) => `${d.n}일차`).join('·')} {m.title}</h2>
           <div className="food-grid">
             {m.list.map((r) => {
               const key = `food-${r.q}`;
@@ -54,9 +55,6 @@ export default function Food({ trip, plan, todayDay }) {
                   <h3>{r.name}</h3>
                   <p className="muted">📍 {r.loc}</p>
                   <p>{r.menu}</p>
-                  {r.open && m.days.some((d) => d.dow != null && !r.open.includes(d.dow)) && (
-                    <p className="warn">⚠ 이 날은 휴무일 수 있어요 ({m.days.map((d) => d.dowLabel).join('·')}요일)</p>
-                  )}
                   <p className="small">
                     출처:{' '}
                     {r.src.map(([label, url], i) => (

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { rpc, store } from './lib.js';
 
-const EMPTY = { name: '', settings: {}, checklist: [], expenses: [], progress: {}, notes: {} };
+const EMPTY = { name: '', checklist: [], expenses: [], progress: {}, notes: {} };
 
 // Shared trip data (checklist, expenses, visited stops, notes) behind a trip code.
 export function useTrip() {
@@ -80,8 +80,6 @@ export function useTrip() {
       });
       if (row) setData((d) => ({ ...d, expenses: [...d.expenses, row] }));
     },
-    saveSettings: (settings) =>
-      run({ ...data, settings }, 'trip_settings_set', { p_settings: settings }),
     deleteExpense: (id) =>
       run({ ...data, expenses: data.expenses.filter((x) => x.id !== id) }, 'trip_expense_delete', { p_id: id }),
   };

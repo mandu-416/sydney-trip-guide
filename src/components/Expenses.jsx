@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { EXPENSE_CATEGORIES } from '../data.js';
-import { dateLabel } from '../plan.js';
+import { DAYS } from '../plan.js';
 import { fmtAud, fmtKrw, store } from '../lib.js';
 import { TripGate } from './Common.jsx';
 
@@ -31,10 +31,9 @@ function settle(expenses) {
   return { names, share, transfers, paid };
 }
 
-export default function Expenses({ trip, plan, rate, todayDay }) {
-  const DAYS = plan.days;
+export default function Expenses({ trip, rate }) {
   const [form, setForm] = useState(() => ({
-    day: todayDay ?? 1,
+    day: 1,
     category: '식비',
     title: '',
     amount: '',
@@ -94,7 +93,7 @@ export default function Expenses({ trip, plan, rate, todayDay }) {
           >
             <select value={form.day} onChange={set('day')} aria-label="일차">
               <option value={0}>출발 전</option>
-              {DAYS.map((d) => <option key={d.n} value={d.n}>{d.n}일차{d.date ? ` ${dateLabel(d)}` : ''}</option>)}
+              {DAYS.map((d) => <option key={d.n} value={d.n}>{d.n}일차</option>)}
             </select>
             <select value={form.category} onChange={set('category')} aria-label="분류">
               {EXPENSE_CATEGORIES.map((c) => <option key={c}>{c}</option>)}

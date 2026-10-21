@@ -26,7 +26,7 @@ export default function Info() {
 
       <section className="card">
         <h2>비 오는 날 갈 만한 실내 명소</h2>
-        <p className="muted small">시드니 11월은 소나기가 잦습니다. 접이식 우산을 들고 다니고 전날 밤·당일 아침 예보를 보세요.</p>
+        <p className="muted small">시드니 봄(10~11월)은 소나기가 잦습니다. 접이식 우산을 들고 다니고 전날 밤·당일 아침 예보를 보세요.</p>
         <ul className="spots">
           {RAIN_SPOTS.map(([name, from, hours, point, url]) => (
             <li key={name}>

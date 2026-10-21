@@ -1,23 +1,19 @@
 import { useEffect, useState } from 'react';
 import { MEALS, mapLink } from '../data.js';
-import { parseSlot } from '../lib.js';
-import { dateLabel, WEEKDAY } from '../plan.js';
+import { DAYS } from '../plan.js';
 import { MapImage, TripGate } from './Common.jsx';
 
-function Timeline({ items, prefix, trip, live, now, dow }) {
+function Timeline({ items, prefix, trip }) {
   const ready = trip.status === 'ready';
   return (
     <ol className="timeline">
       {items.map((it, i) => {
-        const [slot, what, move, memo, place, open] = it;
+        const [slot, what, move, memo, place] = it;
         const key = `${prefix}-${i}`;
         const done = !!trip.data.progress[key];
-        const [s, e] = parseSlot(slot);
-        const isNow = live && now.minutes >= s && now.minutes < e;
-        const closed = dow != null && open && !open.includes(dow);
         return (
-          <li key={key} className={`${done ? 'done' : ''} ${isNow ? 'now' : ''}`}>
-            <div className="tl-time">{slot}{isNow && <span className="now-tag">지금</span>}</div>
+          <li key={key} className={done ? 'done' : ''}>
+            <div className="tl-time">{slot}</div>
             <div className="tl-body">
               <div className="tl-head">
                 {ready && (
@@ -30,7 +26,6 @@ function Timeline({ items, prefix, trip, live, now, dow }) {
                 )}
                 <strong>{what}</strong>
               </div>
-              {closed && <p className="warn">⚠ {WEEKDAY[dow]}요일에는 열지 않아요. 다른 날로 옮기세요.</p>}
               {move && move !== '—' && <p className="tl-move">🚶 {move}</p>}
               {memo && memo !== '—' && <p className="tl-memo">{memo}</p>}
               {place && (
@@ -68,14 +63,12 @@ function Note({ trip, day }) {
   );
 }
 
-export default function Itinerary({ day, go, trip, plan, weather, now, todayDay }) {
-  const d = plan.days.find((x) => x.n === day) ?? plan.days[0];
+export default function Itinerary({ day, go, trip }) {
+  const d = DAYS.find((x) => x.n === day) ?? DAYS[0];
   const t = d.tpl;
   const hasRainPlan = typeof t.rain === 'object';
-  const wx = d.date ? weather.byDate[d.date] : null;
   const [rainMode, setRainMode] = useState(false);
-  useEffect(() => setRainMode(hasRainPlan && !!wx && wx.rain >= 60), [d.n, d.id, wx?.rain]);
-  const live = todayDay === d.n;
+  useEffect(() => setRainMode(false), [d.n]);
   const meals = MEALS.filter((m) => m.tpl === d.id);
   const items = rainMode ? t.rain.items.map(([s, w, orig, , , open]) => [s, w, orig ? `원래: ${orig}` : '', '', '', open]) : d.items;
   const prefix = `${rainMode ? 'r-' : ''}${d.id}`;
@@ -84,38 +77,23 @@ export default function Itinerary({ day, go, trip, plan, weather, now, todayDay 
   return (
     <>
       <div className="chips" role="tablist">
-        {plan.days.map((x) => (
+        {DAYS.map((x) => (
           <button
             key={x.n}
             role="tab"
             aria-selected={x.n === d.n}
-            className={`chip ${x.n === d.n ? 'on' : ''} ${todayDay === x.n ? 'today' : ''}`}
+            className={`chip ${x.n === d.n ? 'on' : ''}`}
             onClick={() => go('days', x.n)}
           >
-            {x.n}일차<small>{x.date ? dateLabel(x) : x.tpl.tag}</small>
+            {x.n}일차<small>{x.tpl.tag}</small>
           </button>
         ))}
       </div>
 
-      {!plan.dated && (
-        <p className="notice">✈️ 홈에서 비행기 일정을 넣으면 날짜·요일과 도착일·출국일 시간이 맞춰집니다.</p>
-      )}
-
       <section className="card">
-        <p className="eyebrow">{d.n}일차{d.date ? ` · ${dateLabel(d)}` : ''} · {t.tag}</p>
+        <p className="eyebrow">{d.n}일차 · {t.tag}</p>
         <h1>{t.title}</h1>
         <p>{t.summary}</p>
-        {d.warnings.length > 0 && (
-          <div className="warn-box">
-            {d.warnings.map((w) => <p key={w}>⚠ {w}</p>)}
-            <button className="link" onClick={() => go('home')}>일정 배치 바꾸기</button>
-          </div>
-        )}
-        {wx && (
-          <p className="wx-line">
-            {wx.icon} {wx.text} {wx.max}°/{wx.min}° · 강수 {wx.rain}% · 일몰 {wx.sunset}
-          </p>
-        )}
         {hasRainPlan && (
           <div className="segmented" role="group" aria-label="날씨별 일정">
             <button className={!rainMode ? 'on' : ''} onClick={() => setRainMode(false)}>☀️ 기본 일정</button>
@@ -135,7 +113,7 @@ export default function Itinerary({ day, go, trip, plan, weather, now, todayDay 
       <section className="card">
         <h2>시간표</h2>
         {items.length ? (
-          <Timeline items={items} prefix={prefix} trip={trip} live={live} now={now} dow={d.dow} />
+          <Timeline items={items} prefix={prefix} trip={trip} />
         ) : (
           <p className="muted">정해진 일정이 없습니다. 메모에 계획을 적어 두세요.</p>
         )}
@@ -166,9 +144,6 @@ export default function Itinerary({ day, go, trip, plan, weather, now, todayDay 
                   <li key={r.name}>
                     <a href={mapLink(r.q)} target="_blank" rel="noreferrer">{r.name}</a>{' '}
                     <span className="muted">— {r.menu}</span>
-                    {d.dow != null && r.open && !r.open.includes(d.dow) && (
-                      <span className="warn-inline"> ⚠ {d.dowLabel}요일 휴무</span>
-                    )}
                   </li>
                 ))}
               </ul>

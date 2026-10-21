@@ -8,7 +8,6 @@ create table public.trips (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   code_hash text not null,
-  settings jsonb not null default '{}'::jsonb,
   created_at timestamptz not null default now()
 );
 
@@ -78,7 +77,6 @@ declare t uuid := public._trip_id(p_code);
 begin
   return jsonb_build_object(
     'name', (select name from public.trips where id = t),
-    'settings', (select settings from public.trips where id = t),
     'checklist', coalesce((select jsonb_agg(c order by c.category, c.sort, c.created_at)
                            from public.trip_checklist c where c.trip_id = t), '[]'),
     'expenses', coalesce((select jsonb_agg(e order by e.day, e.created_at)
@@ -87,16 +85,6 @@ begin
                           from public.trip_progress p where p.trip_id = t), '{}'),
     'notes', coalesce((select jsonb_object_agg(n.day::text, n.body)
                        from public.trip_notes n where n.trip_id = t), '{}'));
-end $$;
-
-create function public.trip_settings_set(p_code text, p_settings jsonb) returns void
-language plpgsql security definer set search_path = '' as $$
-declare t uuid := public._trip_id(p_code);
-begin
-  if pg_column_size(p_settings) > 4000 then
-    raise exception 'settings too large';
-  end if;
-  update public.trips set settings = p_settings where id = t;
 end $$;
 
 create function public.trip_checklist_add(p_code text, p_category text, p_label text) returns jsonb
@@ -160,12 +148,12 @@ begin
   on conflict (trip_id, day) do update set body = excluded.body, updated_at = now();
 end $$;
 
-revoke all on function public.trip_load(text), public.trip_settings_set(text,jsonb),
+revoke all on function public.trip_load(text),
   public.trip_checklist_add(text,text,text), public.trip_checklist_toggle(text,uuid,boolean),
   public.trip_checklist_delete(text,uuid), public.trip_expense_add(text,int,text,text,numeric,text),
   public.trip_expense_delete(text,uuid), public.trip_progress_set(text,text,boolean),
   public.trip_note_set(text,int,text) from public;
-grant execute on function public.trip_load(text), public.trip_settings_set(text,jsonb),
+grant execute on function public.trip_load(text),
   public.trip_checklist_add(text,text,text), public.trip_checklist_toggle(text,uuid,boolean),
   public.trip_checklist_delete(text,uuid), public.trip_expense_add(text,int,text,text,numeric,text),
   public.trip_expense_delete(text,uuid), public.trip_progress_set(text,text,boolean),
