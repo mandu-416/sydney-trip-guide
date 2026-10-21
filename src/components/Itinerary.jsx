@@ -120,6 +120,18 @@ export default function Itinerary({ day, go, trip }) {
         {!hasRainPlan && t.rain && <p className="rain-note">☔ 비가 오면: {t.rain}</p>}
       </section>
 
+      {t.tips && (
+        <section className="card">
+          <h2>{t.tips.title}</h2>
+          <p className="muted">{t.tips.lead}</p>
+          <dl className="tips">
+            {t.tips.items.map(([k, v]) => (
+              <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+            ))}
+          </dl>
+        </section>
+      )}
+
       {t.extra && (
         <section className="card">
           <h2>{t.extra.title}</h2>
