@@ -1,0 +1,337 @@
+// Sydney itinerary templates. Dates come from the flight schedule the traveler enters;
+// each day of the trip is assigned one template (order is editable).
+// Item: [slot, what, move, memo, place?, open?] — `open` lists weekdays (0=Sun … 6=Sat)
+// the place is open, so the app can warn when a template lands on a closed day.
+
+export const TRIP = {
+  title: '시드니 여행 동선',
+  lead:
+    '시드니 시내 관광, 블루마운틴·포트스테판 투어, 본다이 해안 산책, 올림픽파크 수영·헬스와 새벽 러닝을 묶은 일정입니다. 비행기 도착·출발 시각을 넣으면 날짜와 요일이 맞춰지고, 도착일과 출국일 시간표는 비행기 시각에 맞춰 다시 계산됩니다. 이동 시간은 타운홀역 근처(도보 5분) 숙소 기준입니다.',
+};
+
+const g = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q + ' Sydney')}`;
+export const mapLink = g;
+
+const WEEKDAYS_OPEN_PADDYS = [0, 3, 4, 5, 6]; // closed Mon, Tue
+
+export const TEMPLATES = {
+  arrival: {
+    id: 'arrival',
+    tag: '도착·시내',
+    title: '도착, 숙소 근처 쇼핑과 달링하버',
+    summary:
+      '도착일에는 숙소에서 가까운 ①패디스 마켓과 ②마트만 들르고 달링하버에서 저녁을 먹습니다. 패디스 마켓은 월·화에 쉽니다. ③~⑤는 출국일, ⑥은 시내 명소 날에 들릅니다.',
+    map: '/maps/day1.jpg',
+    mapAlt: '도착일 동선: 공항 → 숙소 → 패디스 마켓 → 울워스 타운홀 → 달링하버',
+    // the first three rows are rebuilt from the arrival time (see plan.js)
+    items: [
+      ['16:15–17:15', '쇼핑 ① 패디스 마켓', '도보 5–10분', '키링·마그넷·코알라 인형·포포크림. 18:00 마감', "Paddy's Markets Haymarket", WEEKDAYS_OPEN_PADDYS],
+      ['17:15–17:45', '쇼핑 ② 타운홀 울월스·콜스', '도보 약 10분', '팀탐·버섯과자·영양제(노란 세일 딱지). 물·간식도', 'Woolworths Town Hall'],
+      ['17:45–18:15', '숙소에 짐 두기', '도보 약 10분', ''],
+      ['18:15–20:00', '달링하버 저녁·야경', '도보 약 10분', '투어 집결지(SEA LIFE)도 미리 확인', 'Darling Harbour'],
+      ['20:30', '숙소', '도보 약 10분', '다음 날 일정 확인 후 취침'],
+    ],
+    rain: '패디스 마켓·마트는 실내라 그대로 갑니다. 달링하버 저녁 대신 차이나타운에서 먹습니다.',
+  },
+  bluemountains: {
+    id: 'bluemountains',
+    tag: '블루마운틴 투어',
+    title: '하버브리지 새벽 러닝, 블루마운틴 투어, 도착 후 야식',
+    summary: '투어 집결이 13:20이라 오전은 러닝 1시간만 하고 나머지는 쉬면서 긴 투어에 대비합니다. 집결 시각은 예약한 투어에 맞춰 고치세요.',
+    map: '/maps/day2.jpg',
+    mapAlt: '블루마운틴 투어일 동선: 새벽 러닝(서큘러키·하버브리지·키리빌리) → 숙소 → SEA LIFE 투어 집결',
+    items: [
+      ['06:00', '기상', '—', ''],
+      ['06:15–07:30', '새벽 러닝 약 5km: 서큘러키 → 더 록스 → 하버브리지 보행로 → 키리빌리 → 복귀', '서큘러키까지 기차 약 10분', '키리빌리 물가에서 오페라하우스 정면 뷰. 다리 입구는 더 록스 쪽 계단', 'Sydney Harbour Bridge pedestrian'],
+      ['07:30–09:00', '숙소 복귀, 샤워·아침', '기차 + 도보', ''],
+      ['09:00–11:30', '휴식·자유 시간', '—', '투어가 밤늦게 끝나니 쉬어 두기. 겹옷·보조배터리'],
+      ['11:45–13:00', '달링하버 점심', '도보 10–15분', '집결지 근처에서'],
+      ['13:20', '블루마운틴 투어 집결(SEA LIFE 수족관 근처)', '도보', '10분 전 도착. 페더데일 → 킹스 테이블랜드 → 에코포인트·세자매봉 → 저녁 → 선셋 → 별보기', 'SEA LIFE Sydney Aquarium'],
+      ['21:00–22:00', '시내 도착', '—', '밤 산은 추우니 겹옷 필수'],
+    ],
+    extra: {
+      title: '투어 후 밤, 시내 도착 후 추천',
+      note: '투어에 저녁이 포함돼 있으니 숙소에서 10분 안의 가벼운 일정만. 다음 날 아침 일정이 있으면 23시 전 취침.',
+      rows: [
+        ['차이나타운·헤이마켓 야식', '딕슨 스트리트 주변에 늦게까지 여는 식당이 많음', '도보 5–10분', '30–45분'],
+        ['달링하버 야경 산책', '투어가 SEA LIFE 근처에서 끝나면 물가를 걷다 숙소로', '도보 10–15분', '30분'],
+        ['월드 스퀘어·타운홀 편의점', '다음 날 물·간식 사두기', '도보 5분', '15분'],
+      ],
+    },
+    rain: '새벽 러닝은 건너뛰고 오전에 쉽니다. 투어 진행 여부는 투어 회사 연락을 확인하세요.',
+  },
+  city: {
+    id: 'city',
+    tag: '시내 명소',
+    title: '올림픽파크 수영·헬스, 보타닉 가든·오페라하우스·더 록스 마켓',
+    summary:
+      '07:00에 일어나 올림픽파크에서 수영·헬스를 하고, 11시부터 유명 관광지를 걸어서 잇습니다. 더 록스 마켓은 토·일에만 열리니 이 일정은 주말에 넣으세요.',
+    map: '/maps/day3.jpg',
+    mapAlt: '시내 명소일 동선: 올림픽파크 → 하이드파크·세인트메리 → 보타닉 가든 → 오페라하우스 → 더 록스 마켓 → 옵저버토리 힐 → 바랑가루 → 달링하버',
+    items: [
+      ['07:00–07:30', '기상·간단한 아침', '—', '수영복·수건·운동화'],
+      ['07:30–08:15', '숙소 → 올림픽파크', '기차 Town Hall → Lidcombe 환승 → Olympic Park', '총 40–45분. 주말 배차 간격 확인'],
+      ['08:15–09:15', '수영: 올림픽파크 아쿠아틱센터 랩 레인', '—', '주말 06:00–19:00. 성인 약 A$10', 'Sydney Olympic Park Aquatic Centre'],
+      ['09:15–10:00', '헬스: 센터 안 Health Club', '—', '1회 이용 가능 여부 미리 전화(02 9714 7500)'],
+      ['10:00–10:15', '샤워·정리', '—', ''],
+      ['10:15–11:00', '올림픽파크 → 하이드파크', '기차, Lidcombe 환승 → Museum·St James역', ''],
+      ['11:00–11:40', '하이드파크 → 세인트메리 대성당', '도보', '약 40분', "St Mary's Cathedral"],
+      ['11:40–13:00', '로열 보타닉 가든 → 미세스 맥쿼리 체어', '도보', '하버브리지와 오페라하우스를 한 프레임에', "Mrs Macquarie's Chair"],
+      ['13:00–14:00', '오페라하우스 외관·가이드 투어', '도보 약 15분', '투어는 공식 사이트에서 예약', 'Sydney Opera House'],
+      ['14:00–15:00', '서큘러키·더 록스 점심', '도보', ''],
+      ['15:00–16:15', '쇼핑 ⑥ 더 록스 마켓과 골목 산책', '도보 5분', '수공예품·먹거리. 토·일만', 'The Rocks Markets', [0, 6]],
+      ['16:15–17:00', '옵저버토리 힐', '도보 약 10분', '하버브리지 전망', 'Observatory Hill'],
+      ['17:00–18:00', '바랑가루 산책', '도보 약 10분', '', 'Barangaroo Reserve'],
+      ['18:00–19:30', '달링하버 저녁·야경', '도보 약 15분', ''],
+      ['20:00', '숙소', '도보 약 10분', ''],
+    ],
+    rain: {
+      note: '올림픽파크 수영장은 실내라 그대로. 보타닉 가든은 주립미술관으로, 옵저버토리 힐·바랑가루는 MCA로 바꿉니다.',
+      map: '/maps/rain3.jpg',
+      mapAlt: '시내 명소일 비 오는 날 동선: 올림픽파크 → 세인트메리 → 아트 갤러리 NSW → 오페라하우스 → 더 록스 마켓 → MCA → 차이나타운',
+      items: [
+        ['07:30–10:45', '올림픽파크 수영·헬스 (그대로)', '같음'],
+        ['11:00–11:30', '세인트메리 대성당 (실내)', '하이드파크 산책'],
+        ['11:30–12:40', '아트 갤러리 오브 NSW', '보타닉 가든·미세스 맥쿼리 체어'],
+        ['12:40–13:00', '서큘러키로 이동 (비가 많이 오면 St James역에서 기차)', '도보'],
+        ['13:00–14:00', '오페라하우스 가이드 투어 (그대로)', '같음'],
+        ['14:00–15:00', '서큘러키 점심', '같음'],
+        ['15:00–16:00', '더 록스 마켓 (천막 아래, 토·일만)', '같음'],
+        ['16:00–17:00', 'MCA 현대미술관 (폐관 시간 확인)', '옵저버토리 힐·바랑가루'],
+        ['17:30–', '기차로 돌아와 차이나타운 저녁', '달링하버'],
+      ],
+    },
+  },
+  bondi: {
+    id: 'bondi',
+    tag: '본다이',
+    title: '브론테→본다이 코스탈 워크, 본다이 마켓, 맨리 페리 선셋',
+    summary:
+      '해안길을 약 1시간 걷고 10시에 여는 본다이 마켓에 맞춰 도착합니다(마켓은 일요일만). 저녁에는 맨리 페리로 하버 선셋을 봅니다. 다음 날 이른 투어가 있으면 20시에는 숙소로.',
+    map: '/maps/day4.jpg',
+    mapAlt: '본다이일 동선: 브론테 → 본다이 코스탈 워크 → 본다이 마켓 → 맨리 페리 선셋',
+    items: [
+      ['07:30–08:30', '기상·아침', '—', '선크림·모자·물, 편한 운동화'],
+      ['08:30–09:15', '숙소 → 브론테 비치', '기차 Town Hall → Bondi Junction + 버스', '약 40–45분', 'Bronte Beach'],
+      ['09:15–10:15', '코스탈 워크: 브론테 → 타마라마 → 본다이', '도보 약 1시간', '해안 절벽길', 'Bondi to Bronte Coastal Walk'],
+      ['10:15–12:00', '본다이 마켓', '도보', '일요일 10:00–16:00, 본다이 공립학교 운동장', 'Bondi Markets', [0]],
+      ['12:00–13:00', '본다이 점심', '도보', '식당 추천 참고'],
+      ['13:00–15:00', '본다이 비치 휴식, 아이스버그 전망', '도보', '해수욕은 빨간·노란 깃발 사이에서만', 'Bondi Icebergs'],
+      ['15:00–15:45', '본다이 → 숙소', '버스 + 기차', '약 40–45분'],
+      ['15:45–17:30', '숙소 휴식', '—', '다음 날 투어가 있으면 짐 미리 싸기'],
+      ['17:30–17:50', '숙소 → 서큘러키', '기차 Town Hall → Circular Quay', '약 10–15분'],
+      ['17:50–18:15', '맨리 페리(서큘러키 3번 선착장)', '페리 20–25분', '편도 약 A$7, 15–20분 간격', 'Circular Quay Wharf 3'],
+      ['18:15–19:10', '맨리 비치 산책, 맨리에서 저녁', '도보 5분', '피시앤칩스 등', 'Manly Beach'],
+      ['19:10–19:40', '돌아오는 페리에서 선셋', '페리 20–25분', '일몰 무렵 오페라하우스·하버브리지가 한 화면에. 야외 좌석'],
+      ['19:40–20:00', '서큘러키 → 숙소', '기차 + 도보', ''],
+      ['21:30', '취침', '—', ''],
+    ],
+    rain: {
+      note: '코스탈 워크는 절벽 길이라 미끄러우니 빼고, 늦잠 후 숙소 근처 실내에서 보냅니다. 비 예보가 이날만이면 코스탈 워크를 출국일 오전으로 옮길 수 있습니다(본다이 마켓은 일요일만).',
+      map: '/maps/rain4.jpg',
+      mapAlt: '본다이일 비 오는 날 동선: 오스트레일리안 뮤지엄 → 차이나타운 점심 → QVB·스트랜드 아케이드(또는 주립도서관) → 패디스 마켓 → 숙소',
+      items: [
+        ['10:00–12:30', '오스트레일리안 뮤지엄 (무료, 공룡·호주 동물)'],
+        ['12:30–13:30', '점심 (차이나타운)'],
+        ['13:30–15:00', 'QVB → 스트랜드 아케이드 → 검션 커피 (또는 주립도서관)'],
+        ['15:00–17:00', '패디스 마켓 쇼핑 (18:00 마감, 월·화 휴무)', '', '', '', WEEKDAYS_OPEN_PADDYS],
+        ['17:00–', '숙소 휴식, 다음 날 일정 준비'],
+      ],
+    },
+  },
+  portstephens: {
+    id: 'portstephens',
+    tag: '포트스테판 투어',
+    title: '포트스테판 투어, 도착 후 장보기·야경 산책',
+    summary: '예약한 투어 일정표는 그대로 두고 집결 전과 도착 후만 채웠습니다. 샌드보딩 후 갈아입을 옷과 여분 양말을 챙기세요.',
+    map: '/maps/day5.jpg',
+    mapAlt: '포트스테판 투어일 동선: 06:50 집결 → 투어 → 18:50 시드니 도착 → 서큘러키 야경',
+    items: [
+      ['05:45–06:20', '기상, 간단한 아침', '—', '전날 사둔 빵·과일'],
+      ['06:20–06:40', '숙소 → SEA LIFE 근처', '도보 10–15분', '10분 전 도착'],
+      ['06:50', '포트스테판 투어 집결', '투어 버스', ''],
+      ['09:00', '고속도로 휴게소', '—', ''],
+      ['10:30', '돌핀크루즈', '—', '바람막이'],
+      ['12:10', '점심', '—', ''],
+      ['13:10', '샌드보딩', '—', '선글라스·갈아입을 옷'],
+      ['14:40', '오크베일 동물원', '—', ''],
+      ['15:50', '포트스테판 출발', '투어 버스 약 3시간', '버스에서 눈 붙이기'],
+      ['18:50', '시드니 도착', '—', '하차 장소 확인'],
+      ['19:00–19:30', '마트 장보기(타운홀 울월스·콜스)', '도보', '기념품 과자·영양제'],
+      ['19:30–20:15', '숙소 근처 저녁', '도보', '식당 추천 참고'],
+      ['20:15–21:45', '서큘러키 야경 산책: 오페라하우스·하버브리지 → 더 록스 → 옵저버토리 힐', '기차 약 10분 + 도보', '피곤하면 달링하버나 차이나타운만', 'Circular Quay'],
+      ['21:45–22:15', '숙소 복귀', '기차 또는 도보 30분', ''],
+    ],
+    rain: '투어 후 서큘러키 야경 산책은 빼고 숙소 근처에서 저녁만 먹습니다.',
+  },
+  departure: {
+    id: 'departure',
+    tag: '시내·귀국',
+    title: '느긋한 아침, 마지막 쇼핑, 귀국',
+    summary:
+      '출발 3시간 전까지 공항에 도착하도록 비행기 시각에서 거꾸로 계산합니다. 패디스 마켓은 월·화에 쉬니 쇼핑은 QVB·피트 스트리트·면세점에서.',
+    // the airport rows are rebuilt from the departure time (see plan.js)
+    items: [
+      ['07:30–09:30', '늦잠, 아침, 짐 싸기', '—', '액체류(포포크림 등)는 위탁 수하물로'],
+      ['10:00', '체크아웃, 짐 맡기기', '—', '짐 보관 가능 여부 미리 확인'],
+      ['10:30–12:30', '쇼핑 ③ QVB → 스트랜드 아케이드 → ④ 피트 스트리트 몰 → ⑤ 시드니 면세점', '각 도보 3–5분', '어그·캐시미어 / 젤리켓 / 프로폴리스·마누카꿀. 면세점은 여권', 'Queen Victoria Building'],
+      ['12:30–13:30', '점심', '도보', ''],
+      ['13:30–16:00', '바랑가루 → 달링하버 산책', '도보 약 30분', '카페에서 쉬어가기'],
+      ['16:00–17:15', '숙소 근처 카페, 짐 찾기', '도보 약 10분', '짐 다시 정리'],
+    ],
+    rain: '쇼핑은 실내라 그대로. 바랑가루·달링하버 산책 대신 주립미술관이나 오스트레일리안 뮤지엄에 가세요.',
+  },
+  free: {
+    id: 'free',
+    tag: '자유 일정',
+    title: '자유 일정',
+    summary: '추가로 생긴 날입니다. 비 오는 날 실내 명소나 식당 추천을 참고해 채우세요.',
+    items: [],
+    rain: '실내 명소 목록(교통·정보 탭)을 참고하세요.',
+  },
+};
+
+export const DEFAULT_ORDER = ['arrival', 'bluemountains', 'city', 'bondi', 'portstephens', 'departure'];
+
+const S = {
+  timber: ['호주 3n년차 블로거', 'https://blog.naver.com/timberbank/224185497542'],
+  expert: ['Sydney Expert', 'https://sydneyexpert.com/where-to-eat-in-darling-harbour/'],
+  janiceTop: ['Janice Fung', 'https://www.janicefung.com/top-10-cheap-eats-in-sydney/'],
+  janiceCT: ['Janice Fung', 'https://www.janicefung.com/sydney-chinatown-cheap-eats/'],
+  broad: ['Broadsheet', 'https://www.broadsheet.com.au/sydney/food-and-drink/article/cheap-eats-12-bondi-beach'],
+};
+
+// tpl = template the meal belongs to; open = weekdays the place serves this meal
+export const MEALS = [
+  {
+    tpl: 'arrival', time: '18:15', title: '저녁 — 숙소 → 달링하버 가는 길',
+    list: [
+      ['마막 Mamak', '15 Goulburn St, 헤이마켓 (도보 5분)', '로티 카나이, 사테. 19시 전에 가기', [S.timber]],
+      ['폰툰 바 Pontoon Bar', '달링하버 물가', '목요일 피자 A$12, 코로나 A$7.50 프로모션', [['네이버 블로그', 'https://blog.naver.com/tinytravelersabroad/224384363444']]],
+      ['누들 페이스 Noodle Face', '달링 쿼터', '만두·국수·수프, 전 메뉴 A$20 이하', [S.expert]],
+    ],
+  },
+  {
+    tpl: 'bluemountains', time: '11:45', title: '점심 — 투어 집결지(SEA LIFE) 근처',
+    list: [
+      ['마릭빌 포크 롤 Marrickville Pork Roll', '스팀 밀 레인(달링 스퀘어 옆)', '반미 약 A$10', [S.expert, S.janiceTop]],
+      ['도파 Dopa', '달링 스퀘어', '일본식 덮밥 A$13.80부터', [S.expert]],
+      ['넘버원 마라탕 No.1 Malatang', '345B-353 Sussex St', '재료를 골라 무게로 계산', [S.timber]],
+    ],
+  },
+  {
+    tpl: 'bluemountains', time: '22:00', title: '밤 — 투어 후 차이나타운 야식',
+    note: '22시 이후 영업 여부는 구글 지도로 확인하세요.',
+    list: [
+      ['미스터 첸 비프 누들 Mr Chen Beef Noodle', 'Prince Centre, 8 Quay St', '매콤한 소스 완탕, 소금후추 두부', [S.janiceCT]],
+      ["마더 추 Mother Chu's Taiwanese Gourmet", '84-88 Dixon St', '달걀 팬케이크 A$5 이하, 찹쌀 롤', [S.janiceCT]],
+      ["엠퍼러스 가든 Emperor's Garden", '96-100 Hay St', '엠퍼러스 퍼프(슈크림 빵)', [S.janiceCT]],
+    ],
+  },
+  {
+    tpl: 'city', time: '07:00', title: '아침 — 올림픽파크 가기 전',
+    list: [
+      ['에디션 커피 로스터스 Edition Coffee Roasters', '스팀 밀 레인(헤이마켓)', '수플레 팬케이크, 커피', [S.expert]],
+      ['싱글오 Single O', '60-64 Reservoir St, 서리힐스 (주말 08:00 오픈)', 'The Avo Show, 바나나브레드', [['네이버 블로그', 'https://blog.naver.com/llalla_nana/224446432474']]],
+      ['헤이븐 Haven', '달링 스퀘어', '아보카도 토스트, 에그 머핀', [S.expert]],
+    ],
+  },
+  {
+    tpl: 'city', time: '14:00', title: '점심 — 오페라하우스·서큘러키·더 록스',
+    list: [
+      ['슈크 Shuk', '더 록스', '아사이 볼 A$13, 샌드위치 A$16', [['The Rocks 공식 가이드', 'https://www.therocks.com/editorials/a-locals-guide-to-cheap-eats-in-the-rocks']]],
+      ['바 루카 Bar Luca', '52 Phillip St', '수제버거, 옥수수 구이', [['네이버 블로그', 'https://blog.naver.com/daisai_house/224229931627']]],
+      ['젤라티시모 Gelatissimo', '오페라하우스 근처', '후식 젤라또', [['시드니 16년 거주자', 'https://blog.naver.com/zzintour/224445286815']]],
+    ],
+  },
+  {
+    tpl: 'city', time: '18:00', title: '저녁 — 달링하버 → 숙소 가는 길',
+    list: [
+      ["베티스 버거 Betty's Burgers", 'ICC 시드니(14 Darling Dr)', "Betty's Classic, 버섯버거, 쉐이크", [S.timber]],
+      ['하라주쿠 교자 Harajuku Gyoza', '달링 스퀘어', '교자와 수제맥주', [S.expert]],
+      ['딕슨 하우스 푸드코트 Dixon House Food Court', 'Little Hay St, 차이나타운', '여러 나라 아시아 음식을 싸게', [S.janiceTop]],
+    ],
+  },
+  {
+    tpl: 'bondi', time: '12:00', title: '점심 — 코스탈 워크 후 본다이',
+    note: '본다이 마켓(일요일 10:00–16:00)의 먹거리 노점도 있습니다.',
+    list: [
+      ['홍하 Hong Ha', '본다이 비치, 1986년부터', '레몬그라스 치킨 반미 A$9.50', [S.broad]],
+      ['리틀 엘 Little L', '1/23-37 Campbell Parade, 노스 본다이', '포르투갈식 치킨버거 A$10', [S.broad]],
+      ['하트 카페 Heart Cafe', '95 Roscoe St', '치킨·치미추리·아보카도 롤 A$12', [S.broad]],
+    ],
+  },
+  {
+    tpl: 'portstephens', time: '19:30', title: '저녁 — 투어 후 숙소 근처',
+    list: [
+      ['바삭스 Basax (한국식 치킨)', '415 Pitt St, 헤이마켓', '프라이드·양념 치킨', [S.timber]],
+      ["시안 퀴진 Xi'an Cuisine", '4/90 Hay St, 헤이마켓', '로우자모, 량피', [S.janiceCT]],
+      ["미세스 찬스 키친 Mrs Chan's Kitchen", '635 George St', '태국식 보트 누들 A$6.9', [S.janiceCT]],
+    ],
+  },
+  {
+    tpl: 'departure', time: '12:30', title: '점심 — 마지막 쇼핑 후',
+    list: [
+      ['말레이 차이니즈 누들 바 Malay Chinese Noodle Bar', '33 Pitt St, 서큘러키역 도보 7분', '씨푸드 락사. 평일 11:00–16:00만', [['시드니 거주 블로거', 'https://blog.naver.com/leeeeeee_life/224392038129']], [1, 2, 3, 4, 5]],
+      ["지미스 레시피 Jimmy's Recipe", '더 갤러리스 1층(500 George St)', '말레이시아 락사', [S.janiceTop]],
+      ['마펜 누들 하우스 Mappen Noodle House', '537-551 George St', '셀프 서비스 우동·소바·튀김', [S.janiceTop]],
+    ],
+  },
+].map((m) => ({
+  ...m,
+  // map search uses the original-language name plus the street, e.g. "Mamak 15 Goulburn St"
+  list: m.list.map(([name, loc, menu, src, open]) => ({
+    name, loc, menu, src, open,
+    q: `${(name.match(/[A-Za-z0-9'.&-]+/g) || []).join(' ')} ${loc.split(/[,(]/)[0]}`.trim(),
+  })),
+}));
+
+export const TRANSPORT = [
+  ['공항 ↔ Town Hall', 'Airport Link 기차(환승 없음)', '15–20분'],
+  ['숙소 ↔ Town Hall역', '도보', '5분'],
+  ['숙소 → 차이나타운·패디스 마켓', '도보', '5–10분'],
+  ['숙소 → 달링하버·SEA LIFE', '도보', '10–15분'],
+  ['숙소 → QVB·피트 스트리트', '도보', '5–10분'],
+  ['숙소 → 하이드파크', '도보', '15분'],
+  ['숙소 → Olympic Park', '기차 Town Hall → Lidcombe 환승', '40–45분'],
+  ['숙소 → 본다이·브론테', '기차 → Bondi Junction + 버스', '40–45분'],
+  ['서큘러키 ↔ 숙소', '기차(Town Hall) + 도보', '10–15분'],
+  ['세인트메리 → 오페라하우스(보타닉 가든 경유)', '도보', '20분'],
+  ['더 록스 → 바랑가루 → 달링하버', '도보', '30분'],
+];
+
+export const RAIN_SPOTS = [
+  ['아트 갤러리 오브 NSW', '도보 20분 / St James역', '무료, 10:00–17:00 (수 22:00)', '하이드파크·세인트메리에서 걸어서 이어짐', 'https://www.artgallery.nsw.gov.au/visit/'],
+  ['오스트레일리안 뮤지엄', '도보 15분 / Museum역', '무료(특별전 유료), 10:00–17:00', '공룡·호주 동물, 2~4시간', 'https://australian.museum/visit/'],
+  ['뉴사우스웨일스 주립도서관', '도보 20분', '무료 (운영시간 확인)', '미첼 열람실', null],
+  ['MCA 현대미술관', '기차로 서큘러키', '입장료 확인 필요', '옥상 카페에서 오페라하우스 뷰', null],
+  ['QVB → 스트랜드 아케이드 → 검션 커피', '도보 5~10분', 'QVB 평일 09:00–18:00', '지붕 있는 쇼핑 거리', null],
+  ['차우 착 윙 박물관 (시드니대)', '버스·도보 약 30분', '무료', '덜 알려진 대학 박물관', null],
+];
+
+export const TIPS = [
+  ['요일별 운영', '패디스 마켓은 수~일(월·화 휴무), 더 록스 마켓은 토·일, 본다이 마켓은 일요일 10:00–16:00. 일정 배치가 요일과 안 맞으면 일정 화면에 경고가 뜹니다.'],
+  ['운동 준비물', '수영복·수영모·수경·수건, 운동화, 러닝용 밝은 옷. 아쿠아틱센터는 귀중품 최소한으로.'],
+  ['헬스장', 'Health Club은 멤버십 위주. 1회 이용이 안 되면 수영 시간을 늘리거나 숙소 헬스장 이용.'],
+  ['투어 날', '블루마운틴 별보기는 밤에 추움 → 겹옷. 포트스테판은 06:50 집결이라 전날 일찍 취침.'],
+  ['자외선', '러닝·코스탈 워크 때 선크림과 모자 필수.'],
+  ['면세·환급', '면세점은 여권. 한 매장 A$300 이상 구매 시 공항에서 TRS 환급.'],
+  ['미리 예약·확인', '오페라하우스 가이드 투어, 체크아웃 후 짐 보관, 투어 집결·하차 장소.'],
+];
+
+export const SOURCES = [
+  ['아쿠아틱센터 공식 페이지', 'https://www.sydneyolympicpark.com.au/aquatic-centre'],
+  ['아쿠아틱센터 랩 스위밍 안내', 'https://www.sydneyolympicpark.com.au/things-to-see-and-do/lap-swimming'],
+  ['아쿠아틱센터 방문 후기 (lhl829)', 'https://blog.naver.com/lhl829/224425218347'],
+  ['시드니 추천 러닝 코스 (dyudyulog)', 'https://blog.naver.com/dyudyulog/224446221046'],
+  ['서큘러키·오페라하우스 아침 러닝 (chamchi_baebae)', 'https://blog.naver.com/chamchi_baebae/224434048360'],
+  ['시내 반나절 워킹투어 (yugayam)', 'https://blog.naver.com/yugayam/224434961360'],
+  ['시내 필수 명소 하루 코스 (travel_quokka)', 'https://blog.naver.com/travel_quokka/224382462797'],
+  ['시드니 5박 6일 코스 (eoqkrtkrjs5)', 'https://blog.naver.com/eoqkrtkrjs5/224435680092'],
+  ['시드니 쇼핑리스트 (db_joo)', 'https://blog.naver.com/db_joo/224446863427'],
+  ['기념품 쇼핑리스트 (sjsn6313)', 'https://blog.naver.com/sjsn6313/224402458916'],
+  ['맨리 페리 후기·노선 정리 (chohammm)', 'https://blog.naver.com/chohammm/224123702343'],
+  ['맨리 페리 선셋 후기 (nomadzin)', 'https://blog.naver.com/nomadzin/224434970106'],
+];
+
+export const EXPENSE_CATEGORIES = ['식비', '교통', '쇼핑', '입장·투어', '숙소', '기타'];
