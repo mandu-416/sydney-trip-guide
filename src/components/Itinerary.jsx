@@ -156,6 +156,7 @@ export default function Itinerary({ day, go, trip }) {
                   <li key={r.name}>
                     <a href={mapLink(r.q)} target="_blank" rel="noreferrer">{r.name}</a>{' '}
                     <span className="muted">— {r.menu}</span>
+                    {r.rsv && r.rsv.startsWith('예약') && <span className="warn-inline"> · {r.rsv}</span>}
                   </li>
                 ))}
               </ul>

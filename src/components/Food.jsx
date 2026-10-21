@@ -23,7 +23,7 @@ export default function Food({ trip }) {
       <section className="card">
         <h1>동선별 식당 추천</h1>
         <p className="muted">
-          끼니마다 동선 근처의 저렴한 현지인 식당 3곳입니다. 가격은 출처 작성 시점 기준이고, 영업시간은 방문 전 구글 지도로 확인하세요.
+          끼니마다 동선 근처의 저렴한 식당 5곳입니다. 예약이 필요한 곳은 「예약필요」, 붐빌 때만 권하는 곳은 「예약 권장」으로 표시했습니다. 가격은 출처 작성 시점 기준이고, 영업시간·예약 여부는 방문 전 구글 지도로 확인하세요.
         </p>
         <input
           className="search"
@@ -55,6 +55,7 @@ export default function Food({ trip }) {
                   <h3>{r.name}</h3>
                   <p className="muted">📍 {r.loc}</p>
                   <p>{r.menu}</p>
+                  {r.rsv && <p className={`rsv ${r.rsv.startsWith('예약필요') ? 'must' : r.rsv.startsWith('예약') ? 'maybe' : ''}`}>{r.rsv}</p>}
                   <p className="small">
                     출처:{' '}
                     {r.src.map(([label, url], i) => (

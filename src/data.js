@@ -4,7 +4,7 @@
 export const TRIP = {
   title: '시드니 여행 동선',
   lead:
-    '시드니 시내 관광, 블루마운틴·포트스테판 투어, 본다이 해안 산책, 올림픽파크 수영·헬스와 새벽 러닝을 묶은 일정입니다. 1일차 14:00 도착, 6일차 21:30 출발 기준입니다. 이동 시간은 타운홀역 근처(도보 5분) 숙소 기준입니다.',
+    '시드니 시내 관광, 블루마운틴·포트스테판 투어, 본다이 해안 산책, 올림픽파크 수영, 오페라하우스 발레, 달링하버 불꽃놀이와 새벽 러닝을 묶은 일정입니다. 1일차 13:35 도착, 6일차 21:30 출발 기준입니다. 이동 시간은 타운홀역 근처(도보 5분) 숙소 기준입니다.',
 };
 
 const g = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q + ' Sydney')}`;
@@ -21,10 +21,10 @@ export const TEMPLATES = {
     mapAlt: '도착일 동선: 공항 → 숙소 → 패디스 마켓 → 울워스 타운홀 → 달링하버',
     // airport and check-in rows are added in plan.js
     items: [
-      ['16:15–17:15', '쇼핑 ① 패디스 마켓', '도보 5–10분', '키링·마그넷·코알라 인형·포포크림. 18:00 마감', "Paddy's Markets Haymarket"],
-      ['17:15–17:45', '쇼핑 ② 타운홀 울월스·콜스', '도보 약 10분', '팀탐·버섯과자·영양제(노란 세일 딱지). 물·간식도', 'Woolworths Town Hall'],
+      ['16:00–17:00', '쇼핑 ① 패디스 마켓', '도보 5–10분', '키링·마그넷·코알라 인형·포포크림. 18:00 마감', "Paddy's Markets Haymarket"],
+      ['17:00–17:45', '쇼핑 ② 타운홀 울월스·콜스', '도보 약 10분', '팀탐·버섯과자·영양제(노란 세일 딱지). 물·간식도', 'Woolworths Town Hall'],
       ['17:45–18:15', '숙소에 짐 두기', '도보 약 10분', ''],
-      ['18:15–20:00', '달링하버 저녁·야경', '도보 약 10분', '투어 집결지(SEA LIFE)도 미리 확인', 'Darling Harbour'],
+      ['18:15–20:00', '달링하버 저녁·야경', '도보 약 10분', '다음 날 투어 집결지(1-5 Wheat Road)도 미리 확인', 'Darling Harbour'],
       ['20:30', '숙소', '도보 약 10분', '다음 날 일정 확인 후 취침'],
     ],
     rain: '패디스 마켓·마트는 실내라 그대로 갑니다. 달링하버 저녁 대신 차이나타운에서 먹습니다.',
@@ -42,8 +42,8 @@ export const TEMPLATES = {
       ['07:30–09:00', '숙소 복귀, 샤워·아침', '기차 + 도보', ''],
       ['09:00–11:30', '휴식·자유 시간', '—', '투어가 밤늦게 끝나니 쉬어 두기. 겹옷·보조배터리'],
       ['11:45–13:00', '달링하버 점심', '도보 10–15분', '집결지 근처에서'],
-      ['13:20', '블루마운틴 투어 집결(SEA LIFE 수족관 근처)', '도보', '10분 전 도착. 페더데일 → 킹스 테이블랜드 → 에코포인트·세자매봉 → 저녁 → 선셋 → 별보기', 'SEA LIFE Sydney Aquarium'],
-      ['21:00–22:00', '시내 도착', '—', '밤 산은 추우니 겹옷 필수'],
+      ['13:20', '블루마운틴 투어 집결: 1-5 Wheat Road(SEA LIFE 오른쪽 도로변), 13:30 정시 출발', '도보', '페더데일(동물원 옵션) → 킹스 테이블랜드 → 에코포인트·세자매봉 → 선셋 → 별보기. 저녁 식사비 별도', '1-5 Wheat Road Sydney'],
+      ['21:00–22:00', '시내 도착 (하차: 389 Pitt St, Rydges 호텔 앞)', '—', '숙소까지 도보 약 5분. 밤 산은 추우니 겹옷 필수'],
     ],
     extra: {
       title: '투어 후 밤, 시내 도착 후 추천',
@@ -166,14 +166,14 @@ export const TEMPLATES = {
     items: [
       ['05:45–06:20', '기상, 간단한 아침', '—', '전날 사둔 빵·과일'],
       ['06:20–06:40', '숙소 → SEA LIFE 근처', '도보 10–15분', '10분 전 도착'],
-      ['06:50', '포트스테판 투어 집결', '투어 버스', ''],
+      ['06:50', '포트스테판 투어 집결: 1-5 Wheat Road(SEA LIFE 오른쪽), 07:00 정시 출발', '투어 버스', '', '1-5 Wheat Road Sydney'],
       ['09:00', '고속도로 휴게소', '—', ''],
       ['10:30', '돌핀크루즈', '—', '바람막이'],
       ['12:10', '점심', '—', ''],
       ['13:10', '샌드보딩', '—', '선글라스·갈아입을 옷'],
       ['14:40', '오크베일 동물원', '—', ''],
       ['15:50', '포트스테판 출발', '투어 버스 약 3시간', '버스에서 눈 붙이기'],
-      ['18:50', '시드니 도착', '—', '하차 장소 확인'],
+      ['18:50', '시드니 도착 (하차: 389 Pitt St, Rydges 호텔 앞)', '—', ''],
       ['19:00–19:30', '마트 장보기(타운홀 울월스·콜스)', '도보', '기념품 과자·영양제'],
       ['19:30–20:15', '숙소 근처 저녁', '도보', '식당 추천 참고'],
       ['20:15–21:45', '서큘러키 야경 산책: 오페라하우스·하버브리지 → 더 록스 → 옵저버토리 힐', '기차 약 10분 + 도보', '피곤하면 달링하버나 차이나타운만', 'Circular Quay'],
@@ -208,89 +208,118 @@ const S = {
   janiceTop: ['Janice Fung', 'https://www.janicefung.com/top-10-cheap-eats-in-sydney/'],
   janiceCT: ['Janice Fung', 'https://www.janicefung.com/sydney-chinatown-cheap-eats/'],
   broad: ['Broadsheet', 'https://www.broadsheet.com.au/sydney/food-and-drink/article/cheap-eats-12-bondi-beach'],
+  azzurro: ['Azzurro', 'https://www.azzurrohotels.com/blog/cheap-eats-sydney-budget-food-guide'],
+  klook: ['Klook', 'https://www.klook.com/blog/cheap-food-sydney/'],
+  deals: ['Sydney Expert 딜', 'https://sydneyexpert.com/dining-deals-in-sydney/'],
+  lateTO: ['Time Out 심야 식당', 'https://www.timeout.com/sydney/restaurants/the-best-late-night-dining-in-sydney'],
+  lateSL: ['Switch Living', 'https://www.switchliving.com.au/student-guide/sydneys-best-late-night-eats-first-stop-chinatown/'],
+  bondi: ['Visit Bondi Beach', 'https://www.visitbondibeach.com/bondi-eat-and-drink/cheap-eats-bondi-beach'],
 };
 
-// tpl = the day plan the meal belongs to
+// tpl = the day plan the meal belongs to.
+// Row: [name, location, menu/price, sources, reservation]
+// reservation: '워크인' (walk in), '예약 권장' (book when busy), '예약필요' (book ahead)
+const W = '워크인';
 export const MEALS = [
   {
     tpl: 'arrival', time: '18:15', title: '저녁 — 숙소 → 달링하버 가는 길',
     list: [
-      ['마막 Mamak', '15 Goulburn St, 헤이마켓 (도보 5분)', '로티 카나이, 사테. 19시 전에 가기', [S.timber]],
-      ['폰툰 바 Pontoon Bar', '달링하버 물가', '목요일 피자 A$12, 코로나 A$7.50 프로모션', [['네이버 블로그', 'https://blog.naver.com/tinytravelersabroad/224384363444']]],
-      ['누들 페이스 Noodle Face', '달링 쿼터', '만두·국수·수프, 전 메뉴 A$20 이하', [S.expert]],
+      ['마막 Mamak', '15 Goulburn St, 헤이마켓 (도보 5분)', '로티 카나이, 사테. 19시 전에 가기', [S.timber, S.azzurro], '워크인(예약 안 받음, 줄 빨리 빠짐)'],
+      ['폰툰 바 Pontoon Bar', '달링하버 물가', '목요일 피자 A$12, 코로나 A$7.50 프로모션', [['네이버 블로그', 'https://blog.naver.com/tinytravelersabroad/224384363444']], W],
+      ['누들 페이스 Noodle Face', '달링 쿼터', '만두·국수·수프, 전 메뉴 A$20 이하', [S.expert], W],
+      ['우메 버거 Ume Burger', '달링 스퀘어', '버거 A$16–19', [S.azzurro], W],
+      ['난징 덤플링 Nanjing Dumpling', '차이나타운', '만두·국수, 대부분 A$20 이하. 줄이 김', [S.klook], W],
     ],
   },
   {
     tpl: 'bluemountains', time: '11:45', title: '점심 — 투어 집결지(SEA LIFE) 근처',
     list: [
-      ['마릭빌 포크 롤 Marrickville Pork Roll', '스팀 밀 레인(달링 스퀘어 옆)', '반미 약 A$10', [S.expert, S.janiceTop]],
-      ['도파 Dopa', '달링 스퀘어', '일본식 덮밥 A$13.80부터', [S.expert]],
-      ['넘버원 마라탕 No.1 Malatang', '345B-353 Sussex St', '재료를 골라 무게로 계산', [S.timber]],
+      ['마릭빌 포크 롤 Marrickville Pork Roll', '스팀 밀 레인(달링 스퀘어 옆)', '반미 약 A$10', [S.expert, S.janiceTop], '워크인(포장)'],
+      ['도파 Dopa', '달링 스퀘어', '일본식 덮밥 A$13.80부터', [S.expert], W],
+      ['넘버원 마라탕 No.1 Malatang', '345B-353 Sussex St', '재료를 골라 무게로 계산', [S.timber], W],
+      ['토스티 스미스 Toastie Smith', '달링 스퀘어', '토스트 샌드위치, 전 메뉴 A$17.50 이하', [S.expert], W],
+      ['호지악 Ho Jiak Haymarket', 'Hay St, 헤이마켓', '평일 11:00–16:00 점심 세트+음료 A$30 미만', [S.deals], '예약 권장'],
     ],
   },
   {
     tpl: 'bluemountains', time: '22:00', title: '밤 — 투어 후 차이나타운 야식',
-    note: '22시 이후 영업 여부는 구글 지도로 확인하세요.',
+    note: '투어 하차지는 389 Pitt St(Rydges 호텔 앞)입니다. 22시 이후 영업 여부는 구글 지도로 확인하세요.',
     list: [
-      ['미스터 첸 비프 누들 Mr Chen Beef Noodle', 'Prince Centre, 8 Quay St', '매콤한 소스 완탕, 소금후추 두부', [S.janiceCT]],
-      ["마더 추 Mother Chu's Taiwanese Gourmet", '84-88 Dixon St', '달걀 팬케이크 A$5 이하, 찹쌀 롤', [S.janiceCT]],
-      ["엠퍼러스 가든 Emperor's Garden", '96-100 Hay St', '엠퍼러스 퍼프(슈크림 빵)', [S.janiceCT]],
+      ['미스터 첸 비프 누들 Mr Chen Beef Noodle', 'Prince Centre, 8 Quay St', '매콤한 소스 완탕, 소금후추 두부', [S.janiceCT], W],
+      ["마더 추 Mother Chu's Taiwanese Gourmet", '84-88 Dixon St', '달걀 팬케이크 A$5 이하, 찹쌀 롤', [S.janiceCT], W],
+      ["엠퍼러스 가든 Emperor's Garden", '96-100 Hay St', '엠퍼러스 퍼프(슈크림 빵)', [S.janiceCT], '워크인(포장)'],
+      ['도디 파이당 Dodee Paidang', '헤이마켓', '똠얌 국수. 매일 자정까지', [S.lateTO], W],
+      ['올드타운 홍콩 퀴진 Old Town Hong Kong Cuisine', 'Dixon St, 차이나타운', '홍콩식 국수·덮밥. 금·토 새벽 2시까지', [S.lateSL], W],
     ],
   },
   {
     tpl: 'city', time: '07:00', title: '아침 — 올림픽파크 가기 전',
+    note: '07:00에 확실히 여는 곳은 럭스 8 카페뿐입니다. 나머지는 늦게 열어 수영 후 숙소에 들를 때 브런치로 가거나, 숙소 주방에서 간단히 드세요.',
     list: [
-      ['에디션 커피 로스터스 Edition Coffee Roasters', '스팀 밀 레인(헤이마켓)', '수플레 팬케이크, 커피', [S.expert]],
-      ['싱글오 Single O', '60-64 Reservoir St, 서리힐스 (주말 08:00 오픈)', 'The Avo Show, 바나나브레드', [['네이버 블로그', 'https://blog.naver.com/llalla_nana/224446432474']]],
-      ['헤이븐 Haven', '달링 스퀘어', '아보카도 토스트, 에그 머핀', [S.expert]],
+      ['에디션 커피 로스터스 Edition Coffee Roasters', '스팀 밀 레인(헤이마켓)', '수플레 팬케이크, 커피. 여는 시간 확인', [S.expert], W],
+      ['럭스 8 카페 Luxe 8 Cafe & Bar', 'Sussex St, CBD', '매일 07:00 오픈. 샌드위치·커피', [['Restaurant Guru', 'https://restaurantguru.com/breakfast-Haymarket-m9619']], W],
+      ['헤이븐 Haven Coffee', '85 Harbour St, 헤이마켓', '아보카도 토스트. 주말 07:30 오픈', [['Haven Coffee', 'https://havencoffee.com.au/']], W],
+      ['싱글오 Single O', '60-64 Reservoir St, 서리힐스 (주말 08:00 오픈)', 'The Avo Show, 바나나브레드', [['네이버 블로그', 'https://blog.naver.com/llalla_nana/224446432474']], '워크인(웨이팅)'],
+      ["더 브라더스 카페 The Brother's Cafe", '달링 스퀘어', '브런치. 매일 09:00 오픈', [['Darling Harbour', 'https://www.darlingharbour.com/eat-drink/the-brother-s-cafe']], W],
     ],
   },
   {
     tpl: 'city', time: '12:15', title: '점심(공연 전) — 오페라하우스·서큘러키·더 록스',
     list: [
-      ['슈크 Shuk', '더 록스', '아사이 볼 A$13, 샌드위치 A$16', [['The Rocks 공식 가이드', 'https://www.therocks.com/editorials/a-locals-guide-to-cheap-eats-in-the-rocks']]],
-      ['바 루카 Bar Luca', '52 Phillip St', '수제버거, 옥수수 구이', [['네이버 블로그', 'https://blog.naver.com/daisai_house/224229931627']]],
-      ['젤라티시모 Gelatissimo', '오페라하우스 근처', '후식 젤라또', [['시드니 16년 거주자', 'https://blog.naver.com/zzintour/224445286815']]],
+      ['바 루카 Bar Luca', '52 Phillip St', '수제버거, 옥수수 구이', [['네이버 블로그', 'https://blog.naver.com/daisai_house/224229931627']], W],
+      ['슈크 Shuk', '더 록스', '아사이 볼 A$13, 샌드위치 A$16', [['The Rocks 공식 가이드', 'https://www.therocks.com/editorials/a-locals-guide-to-cheap-eats-in-the-rocks']], W],
+      ['포 프로그스 크레페리 Four Frogs Creperie', '서큘러키', '갈레트·크레페. 빨리 나옴', [['Tripadvisor', 'https://www.tripadvisor.com/RestaurantsNear-g255060-d257278-Sydney_Opera_House-Sydney_New_South_Wales.html']], W],
+      ['오페라 바 Opera Bar', '오페라하우스 바로 아래', '하버 뷰 캐주얼 메뉴. 가격은 조금 더 나감', [['Man of Many', 'https://manofmany.com/culture/food/best-circular-quay-restaurants']], '예약 권장(토요일 혼잡)'],
+      ['젤라티시모 Gelatissimo', '오페라하우스 근처', '후식 젤라또', [['시드니 16년 거주자', 'https://blog.naver.com/zzintour/224445286815']], W],
     ],
   },
   {
-    tpl: 'city', time: '18:00', title: '저녁 — 달링하버 → 숙소 가는 길',
+    tpl: 'city', time: '18:00', title: '저녁 — 달링하버 → 불꽃놀이 → 숙소',
     list: [
-      ["베티스 버거 Betty's Burgers", 'ICC 시드니(14 Darling Dr)', "Betty's Classic, 버섯버거, 쉐이크", [S.timber]],
-      ['하라주쿠 교자 Harajuku Gyoza', '달링 스퀘어', '교자와 수제맥주', [S.expert]],
-      ['딕슨 하우스 푸드코트 Dixon House Food Court', 'Little Hay St, 차이나타운', '여러 나라 아시아 음식을 싸게', [S.janiceTop]],
+      ["베티스 버거 Betty's Burgers", 'ICC 시드니(14 Darling Dr)', "Betty's Classic, 버섯버거, 쉐이크", [S.timber], W],
+      ['하라주쿠 교자 Harajuku Gyoza', '달링 스퀘어', '교자와 수제맥주', [S.expert], '예약 권장(토요일 불꽃놀이 밤)'],
+      ['딕슨 하우스 푸드코트 Dixon House Food Court', 'Little Hay St, 차이나타운', '여러 나라 아시아 음식을 싸게', [S.janiceTop], W],
+      ["닉스 씨푸드 Nick's Seafood Restaurant", '코클 베이 워프, 달링하버 물가', '해산물. 가격대 높음. 창가에서 불꽃놀이 보기 좋음', [["Nick's Group", 'https://www.nicksgroup.com.au/events-specials/fireworks/']], '예약필요(불꽃놀이 밤 창가 좌석)'],
+      ['차이나타운 누들 킹 Chinatown Noodle King', 'Sussex St, 차이나타운', '죽·국수. 아주 저렴', [['Time Out', 'https://www.timeout.com/sydney/things-to-do/haymarket-area-guide']], W],
     ],
   },
   {
     tpl: 'bondi', time: '12:00', title: '점심 — 코스탈 워크 후 본다이',
     note: '본다이 마켓(일요일 10:00–16:00)의 먹거리 노점도 있습니다.',
     list: [
-      ['홍하 Hong Ha', '본다이 비치, 1986년부터', '레몬그라스 치킨 반미 A$9.50', [S.broad]],
-      ['리틀 엘 Little L', '1/23-37 Campbell Parade, 노스 본다이', '포르투갈식 치킨버거 A$10', [S.broad]],
-      ['하트 카페 Heart Cafe', '95 Roscoe St', '치킨·치미추리·아보카도 롤 A$12', [S.broad]],
+      ['홍하 Hong Ha', '본다이 비치, 1986년부터', '레몬그라스 치킨 반미 A$9.50', [S.broad], '워크인(포장)'],
+      ['리틀 엘 Little L', '1/23-37 Campbell Parade, 노스 본다이', '포르투갈식 치킨버거 약 A$10–15', [S.broad, S.bondi], W],
+      ['하트 카페 Heart Cafe', '95 Roscoe St', '치킨·치미추리·아보카도 롤 A$12', [S.broad], W],
+      ['피시볼 Fishbowl', 'Campbell Parade', '포케 볼. 빨리 나오고 골라 담기', [S.bondi], W],
+      ['라 피아디나 La Piadina', 'Glenayr Ave', '즉석 피아디나, 커피', [S.bondi], W],
     ],
   },
   {
     tpl: 'portstephens', time: '19:30', title: '저녁 — 투어 후 숙소 근처',
+    note: '투어 하차지(389 Pitt St)에서 걸어서 갈 수 있는 곳들입니다.',
     list: [
-      ['바삭스 Basax (한국식 치킨)', '415 Pitt St, 헤이마켓', '프라이드·양념 치킨', [S.timber]],
-      ["시안 퀴진 Xi'an Cuisine", '4/90 Hay St, 헤이마켓', '로우자모, 량피', [S.janiceCT]],
-      ["미세스 찬스 키친 Mrs Chan's Kitchen", '635 George St', '태국식 보트 누들 A$6.9', [S.janiceCT]],
+      ['바삭스 Basax (한국식 치킨)', '415 Pitt St, 헤이마켓', '프라이드·양념 치킨', [S.timber], W],
+      ["시안 퀴진 Xi'an Cuisine", '4/90 Hay St, 헤이마켓', '로우자모, 량피', [S.janiceCT], W],
+      ["미세스 찬스 키친 Mrs Chan's Kitchen", '635 George St', '태국식 보트 누들 A$6.9', [S.janiceCT], W],
+      ['대장금 Dae Jang Kum', 'Goulburn St', '한식 고기구이. 거의 매일 새벽 4시까지', [S.lateTO], '워크인(예약 가능)'],
+      ['골든 센추리 Golden Century', 'Sussex St', '광둥식 해산물·죽. 가격대 높음', [S.lateTO], '예약 권장'],
     ],
   },
   {
     tpl: 'departure', time: '12:30', title: '점심 — 마지막 쇼핑 후',
     list: [
-      ['말레이 차이니즈 누들 바 Malay Chinese Noodle Bar', '33 Pitt St, 서큘러키역 도보 7분', '씨푸드 락사. 평일 11:00–16:00만', [['시드니 거주 블로거', 'https://blog.naver.com/leeeeeee_life/224392038129']]],
-      ["지미스 레시피 Jimmy's Recipe", '더 갤러리스 1층(500 George St)', '말레이시아 락사', [S.janiceTop]],
-      ['마펜 누들 하우스 Mappen Noodle House', '537-551 George St', '셀프 서비스 우동·소바·튀김', [S.janiceTop]],
+      ['말레이 차이니즈 누들 바 Malay Chinese Noodle Bar', '33 Pitt St, 서큘러키역 도보 7분', '씨푸드 락사. 평일 11:00–16:00만', [['시드니 거주 블로거', 'https://blog.naver.com/leeeeeee_life/224392038129']], W],
+      ["지미스 레시피 Jimmy's Recipe", '더 갤러리스 1층(500 George St)', '말레이시아 락사', [S.janiceTop], W],
+      ['마펜 누들 하우스 Mappen Noodle House', '537-551 George St', '셀프 서비스 우동·소바·튀김', [S.janiceTop], W],
+      ['QVB 지하 푸드코트', 'QVB 지하층, 쇼핑 동선 그대로', '덮밥·국수·샌드위치 A$10–14', [S.klook], W],
+      ['페티 루루 Petit Loulou', '마틴 플레이스 메트로 입구', '바게트 샌드위치+샐러드+음료 A$15', [S.deals], W],
     ],
   },
 ].map((m) => ({
   ...m,
   // map search uses the original-language name plus the street, e.g. "Mamak 15 Goulburn St"
-  list: m.list.map(([name, loc, menu, src]) => ({
-    name, loc, menu, src,
+  list: m.list.map(([name, loc, menu, src, rsv]) => ({
+    name, loc, menu, src, rsv,
     q: `${(name.match(/[A-Za-z0-9'.&-]+/g) || []).join(' ')} ${loc.split(/[,(]/)[0]}`.trim(),
   })),
 }));

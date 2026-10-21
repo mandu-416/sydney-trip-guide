@@ -2,9 +2,10 @@
 import { DEFAULT_ORDER, TEMPLATES } from './data.js';
 
 const ARRIVAL = [
-  ['14:00–15:00', '시드니 공항(SYD) 도착, 입국심사·짐 찾기', '—', '넉넉하게 1시간', 'Sydney Airport International'],
-  ['15:00–15:30', '공항 → 숙소', 'Airport Link 기차로 Town Hall까지 15–20분, 숙소까지 도보 5분', 'Opal 또는 컨택리스 카드. 공항역 이용료 별도'],
-  ['15:30–16:15', '숙소 체크인, 잠깐 휴식', '—', ''],
+  ['13:35', '시드니 공항 T1 도착', '—', '', 'Sydney Airport International'],
+  ['13:35–14:35', '입국심사·짐 찾기', '—', '넉넉하게 1시간'],
+  ['14:35–15:05', '공항 → 숙소', 'Airport Link 기차로 Town Hall까지 15–20분, 숙소까지 도보 5분', 'Opal 또는 컨택리스 카드. 공항역 이용료 별도'],
+  ['15:05–16:00', '숙소 체크인, 잠깐 휴식', '—', '체크인 15:00부터'],
 ];
 
 const DEPARTURE = [

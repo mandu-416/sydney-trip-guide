@@ -252,3 +252,6 @@ th { color: var(--muted); font-weight: 500; font-size: 0.82rem; white-space: now
 .tips dd { margin: 0; color: var(--muted); font-size: 0.92rem; }
 .sources { margin: 0; padding-left: 18px; font-size: 0.9rem; }
 
+.rsv { font-size: 0.82rem; font-weight: 700; color: var(--ok); }
+.rsv.maybe { color: #b45309; }
+.rsv.must { color: var(--now); }
