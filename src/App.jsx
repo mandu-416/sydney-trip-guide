@@ -9,11 +9,13 @@ import Food from './components/Food.jsx';
 import Checklist from './components/Checklist.jsx';
 import Expenses from './components/Expenses.jsx';
 import Info from './components/Info.jsx';
+import Shopping from './components/Shopping.jsx';
 
 const TABS = [
   ['home', '홈', '🏠'],
   ['days', '일정', '🗓️'],
   ['food', '식당', '🍜'],
+  ['shop', '쇼핑', '🛍️'],
   ['check', '준비물', '✅'],
   ['money', '경비', '💳'],
   ['info', '교통·정보', '🚆'],
@@ -77,6 +79,7 @@ export default function App() {
         {route.tab === 'home' && <Home {...shared} />}
         {route.tab === 'days' && <Itinerary {...shared} day={Math.min(route.day ?? 1, DAYS.length)} />}
         {route.tab === 'food' && <Food {...shared} />}
+        {route.tab === 'shop' && <Shopping />}
         {route.tab === 'check' && <Checklist {...shared} />}
         {route.tab === 'money' && <Expenses {...shared} />}
         {route.tab === 'info' && <Info {...shared} />}
