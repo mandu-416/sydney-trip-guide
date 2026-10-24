@@ -78,6 +78,14 @@ export default function Shopping({ data = SHOPPING }) {
           {data.tips.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}
         </dl>
       </section>
+      {data.sources?.length > 0 && (
+        <section className="card">
+          <h2>가격 출처</h2>
+          <ul className="small">
+            {data.sources.map(([label, url]) => <li key={url}><a href={url} target="_blank" rel="noreferrer">{label}</a></li>)}
+          </ul>
+        </section>
+      )}
     </>
   );
 }
