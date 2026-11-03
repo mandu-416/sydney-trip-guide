@@ -14,8 +14,13 @@ export function priceTier(price) {
 function Rows({ items, got, toggle }) {
   return (
     <ul className="shop">
-      {items.map(([name, price, where, note]) => (
+      {items.map(([name, price, where, note, img]) => (
         <li key={name} className={got[name] ? 'done' : ''}>
+          {img && (
+            <a className="shop-img" href={`https://commons.wikimedia.org/wiki/File:${img}`} target="_blank" rel="noreferrer" title="Wikimedia Commons: 작가·라이선스 보기">
+              <img src={`https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(img)}?width=160`} alt={name} loading="lazy" />
+            </a>
+          )}
           <label>
             <input type="checkbox" checked={!!got[name]} onChange={() => toggle(name)} />
             <span className="shop-main">
