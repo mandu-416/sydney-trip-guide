@@ -29,8 +29,8 @@ function Timeline({ items, prefix, trip }) {
               {move && move !== '—' && <p className="tl-move">🚶 {move}</p>}
               {memo && memo !== '—' && <p className="tl-memo">{memo}</p>}
               {place && (
-                <a className="tl-link" href={mapLink(place)} target="_blank" rel="noreferrer">
-                  📍 구글 지도
+                <a className="tl-link" href={/^https?:/.test(place) ? place : mapLink(place)} target="_blank" rel="noreferrer">
+                  {/^https?:/.test(place) ? '🗺️ 구글 지도에서 코스 보기' : '📍 구글 지도'}
                 </a>
               )}
             </div>
