@@ -1,9 +1,11 @@
-import { RAIN_SPOTS, SOURCES, TIPS, TRANSPORT, mapLink } from '../data.js';
+import { RAIN_SPOTS, SOURCES, TIPS, TRANSIT, TRANSPORT, mapLink } from '../data.js';
+import Transit from './Transit.jsx';
 import { MapImage } from './Common.jsx';
 
 export default function Info() {
   return (
     <>
+      <Transit data={TRANSIT} />
       <section className="card">
         <h1>교통</h1>
         <p>
